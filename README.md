@@ -3,6 +3,10 @@
 [![crates.io](https://img.shields.io/crates/v/absurd-future.svg)](https://crates.io/crates/absurd-future)
 [![docs.rs](https://docs.rs/absurd-future/badge.svg)](https://docs.rs/absurd-future)
 
+## Stewardship
+
+This repository is an independent continuation of [fpco/absurd-future](https://github.com/fpco/absurd-future), imported with its full Git history. It is maintained by Velox Warp. Original authorship, attribution, and licensing remain preserved.
+
 A future adapter that changes the return type of a future that never resolves (i.e., one that returns `Infallible`) to any other type.
 
 This is useful when you have a task that runs forever (like a background service) but need to use it with an API that expects a specific return type, such as `tokio::task::JoinSet`.
