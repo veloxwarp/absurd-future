@@ -20,4 +20,4 @@ cargo-fmt-check:
 
 # Test
 test:
-	-cargo run --example tokio
+	cargo test --workspace --locked

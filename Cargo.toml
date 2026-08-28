@@ -4,7 +4,7 @@ version = "0.2.0"
 edition = "2021"
 license = "MIT"
 description = "A future adapter that turns a future that never resolves (returns Infallible) into a future that can resolve to any type."
-repository = "https://github.com/fpco/absurd-future"
+repository = "https://github.com/veloxwarp/absurd-future"
 keywords = ["future", "async", "infallible", "never"]
 categories = ["asynchronous"]
 
