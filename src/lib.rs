@@ -117,10 +117,11 @@ mod tests {
     #[tokio::test]
     async fn adapted_pending_future_remains_pending() {
         let adapted = absurd_future::<_, String>(future::pending::<Infallible>());
-        assert!(matches!(
-            tokio::time::timeout(std::time::Duration::from_millis(10), adapted).await,
-            Err(_)
-        ));
+        assert!(
+            tokio::time::timeout(std::time::Duration::from_millis(10), adapted)
+                .await
+                .is_err()
+        );
     }
 
     #[test]
