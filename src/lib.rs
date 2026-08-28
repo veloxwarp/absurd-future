@@ -28,6 +28,7 @@
 //!     }
 //! }
 //!
+//! #[tokio::main]
 //! async fn main() {
 //!     // We have a task that never returns, but we want to use it in a
 //!     // context that expects a `Result<(), &str>`.
