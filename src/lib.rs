@@ -28,6 +28,7 @@
 //!     }
 //! }
 //!
+//! #[tokio::main]
 //! async fn main() {
 //!     // We have a task that never returns, but we want to use it in a
 //!     // context that expects a `Result<(), &str>`.
@@ -103,4 +104,33 @@ where
     F: Future<Output = Infallible>,
 {
     AbsurdFuture::new(future)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::absurd_future;
+    use std::{
+        convert::Infallible,
+        future::{self, Future},
+        task::Poll,
+    };
+
+    #[tokio::test]
+    async fn adapted_pending_future_remains_pending() {
+        let adapted = absurd_future::<_, String>(future::pending::<Infallible>());
+        assert!(
+            tokio::time::timeout(std::time::Duration::from_millis(10), adapted)
+                .await
+                .is_err()
+        );
+    }
+
+    #[test]
+    fn adapted_future_can_be_polled_without_unpinning_inner_future() {
+        let adapted = absurd_future::<_, ()>(future::pending::<Infallible>());
+        let mut adapted = Box::pin(adapted);
+        let waker = std::task::Waker::noop();
+        let mut context = std::task::Context::from_waker(waker);
+        assert!(matches!(adapted.as_mut().poll(&mut context), Poll::Pending));
+    }
 }
